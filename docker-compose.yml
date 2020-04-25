@@ -1,0 +1,44 @@
+version: '3.5'
+services:
+    portainer:
+        image: portainer/portainer
+        container_name: portainer
+        hostname: portainer
+        networks:
+            - main_network
+        ports:
+            - '8000:8000'
+            - '9000:9000'
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
+        restart: always
+
+    nginx-reverse-proxy:
+        build: ./base_server
+        image: nginx-base:latest
+        container_name: nginx-reverse-proxy
+        hostname: nginx-reverse-proxy
+        networks:
+            - main_network
+            - applications_network
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - 'nginx-reverse-config:/etc/nginx'
+            - 'nginx-reverse-certs:/etc/ssl/private'
+        restart: always
+
+networks:
+    main_network:
+        name: main_network
+        driver: bridge
+    applications_network:
+        name: applications_network
+        driver: bridge
+
+volumes:
+    portainer_data:
+    nginx-reverse-config:
+    nginx-reverse-certs:

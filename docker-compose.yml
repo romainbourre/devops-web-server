@@ -3,7 +3,6 @@ services:
     portainer:
         image: portainer/portainer
         container_name: portainer
-        hostname: portainer
         networks:
             - main_network
         ports:
@@ -18,7 +17,6 @@ services:
         build: ./base_server
         image: nginx-base:latest
         container_name: nginx-reverse-proxy
-        hostname: nginx-reverse-proxy
         networks:
             - main_network
             - applications_network
@@ -26,8 +24,8 @@ services:
             - '80:80'
             - '443:443'
         volumes:
-            - 'nginx-reverse-config:/etc/nginx'
-            - 'nginx-reverse-certs:/etc/ssl/private'
+            - nginx_reverse_config:/etc/nginx
+            - nginx_reverse_certs:/etc/letsencrypt
         restart: always
 
 networks:
@@ -40,5 +38,5 @@ networks:
 
 volumes:
     portainer_data:
-    nginx-reverse-config:
-    nginx-reverse-certs:
+    nginx_reverse_config:
+    nginx_reverse_certs:

@@ -24,6 +24,7 @@ services:
             - '80:80'
             - '443:443'
         volumes:
+            - nginx_reverse_html:/usr/share/nginx/html
             - nginx_reverse_config:/etc/nginx
             - nginx_reverse_certs:/etc/letsencrypt
         restart: always
@@ -38,5 +39,6 @@ networks:
 
 volumes:
     portainer_data:
+    nginx_reverse_html:
     nginx_reverse_config:
     nginx_reverse_certs:

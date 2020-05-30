@@ -5,13 +5,13 @@
 ### Requirements
 
 - Docker
-- docker-compose (>= 3.5)
+- docker-compose (>= 3.2)
 
 ### Up server
 
 To up basic server with **Nginx** reverse proxy and  [Portainer](https://www.portainer.io) (to manage your container), dowload this repository on your server.
 
-On the repository root, run `docker-compose up -d --build`.
+On the repository root, run `docker stack deploy -c docker-compose.yml master`.
 
 This command will mount a **Nginx** reverse proxy server container (expose to your 80 port) and **Portainer** (expose to your 9000 port).
 

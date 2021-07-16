@@ -2,43 +2,41 @@ version: '3.2'
 services:
     portainer:
         image: portainer/portainer
-        container_name: portainer
         networks:
-            - main_network
+            - main-network
         ports:
             - '8000:8000'
             - '9000:9000'
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-            - portainer_data:/data
+            - portainer-data:/data
         restart: always
 
-    nginx_reverse_proxy:
+    nginx-reverse-proxy:
         build: ./base_server
         image: nginx-base:latest
-        container_name: nginx_reverse_proxy
         networks:
-            - main_network
-            - applications_network
+            - main-network
+            - applications-network
         ports:
             - '80:80'
             - '443:443'
         volumes:
-            - nginx_reverse_html:/usr/share/nginx/html
-            - nginx_reverse_config:/etc/nginx
-            - nginx_reverse_certs:/etc/letsencrypt
+            - nginx-reverse-html:/usr/share/nginx/html
+            - nginx-reverse-config:/etc/nginx
+            - nginx-reverse-certs:/etc/letsencrypt
         restart: always
 
 networks:
-    main_network:
+    main-network:
         driver: overlay
         attachable: true
-    applications_network:
+    applications-network:
         driver: overlay
         attachable: true
 
 volumes:
-    portainer_data:
-    nginx_reverse_html:
-    nginx_reverse_config:
-    nginx_reverse_certs:
+    portainer-data:
+    nginx-reverse-html:
+    nginx-reverse-config:
+    nginx-reverse-certs:
